@@ -1,4 +1,4 @@
-public class Calculator {
+class Calculator {
     private int result;
     private void plus(int... args){
         for (int arg:args){
@@ -20,10 +20,10 @@ public class Calculator {
             this.result/=arg;
         }
     }
-    protected void square(int arg){
+    void square(int arg){
         this.result=arg*arg;
     }
-    protected void calculate(String input){
+    void calculate(String input){
         int arg = Integer.parseInt(input.substring(1));
         char operation = input.charAt(0);
             switch(operation){
