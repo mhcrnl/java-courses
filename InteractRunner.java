@@ -36,7 +36,6 @@ class InteractRunner {
             System.out.println("Result is \""+calc.getResult()+"\"");
         }
     }
-
     /**
      * @param calc  Calculator object
      * @param input will be checked for the presence of the control words
