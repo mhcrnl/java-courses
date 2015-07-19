@@ -3,8 +3,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * Created by Artva on 15.07.2015.
- *
+ * @author Artur Vakhrameev
+ * @version 1.00
  */
 class InteractRunner {
     private static boolean isExit=false;
@@ -16,13 +16,15 @@ class InteractRunner {
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-        catch (ArithmeticException e2){
-            System.out.println("You can't divide by zero");
-        }
         finally {
             System.out.println("Good bye!");
         }
     }
+
+    /**
+     * @param calc Calculator object
+     * @throws IOException if /by zero
+     */
     private static void calculation(Calculator calc) throws IOException {
         System.out.println("Enter the first argument");
         String firstArg = reader.readLine();
@@ -34,6 +36,12 @@ class InteractRunner {
             System.out.println("Result is \""+calc.getResult()+"\"");
         }
     }
+
+    /**
+     * @param calc  Calculator object
+     * @param input will be checked for the presence of the control words
+     * @return true - if control words haven't been entered, else - returns false
+     */
     private static boolean controlWordsCheck(Calculator calc, String input) {
         boolean doCalculate=true;
         switch (input) {
