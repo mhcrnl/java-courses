@@ -11,7 +11,9 @@ class InteractRunner {
     private static final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     public static void main(String[] args) {
         try {
-            Calculator calc = new Calculator();
+            System.out.println("Enter the first argument");
+            int firstArg = Integer.parseInt(reader.readLine());
+            Calculator calc = new Calculator(firstArg);
             calculation(calc);
         } catch (IOException e1) {
             e1.printStackTrace();
@@ -26,9 +28,7 @@ class InteractRunner {
      * @throws IOException if /by zero
      */
     private static void calculation(Calculator calc) throws IOException {
-        System.out.println("Enter the first argument");
-        String firstArg = reader.readLine();
-        calc.setResult(Integer.parseInt(firstArg));
+
         while (!(isExit)) {
             System.out.println("What to do with \"" + calc.getResult() + "\"?");
             String input = reader.readLine();

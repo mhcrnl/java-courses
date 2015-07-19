@@ -1,3 +1,4 @@
+
 /**
  * @author Artva 15/07/2015
  */
@@ -6,6 +7,13 @@ class Calculator {
      * current calculation result
      */
     private int result;
+
+    /**
+     * @param firstArg Setting first argument
+     */
+    public Calculator(int firstArg){
+        this.result=firstArg;
+    }
 
     /**
      * @param args Array of input arguments, which will be added to result
@@ -83,11 +91,4 @@ class Calculator {
         this.result=0;
     }
 
-    /**
-     * Sets result value. Using to set first argument.
-     * @param arg Argument, which will be set as result
-     */
-    public void setResult(int arg){
-        this.result=arg;
-    }
 }
