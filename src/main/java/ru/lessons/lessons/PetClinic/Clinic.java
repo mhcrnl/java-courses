@@ -1,4 +1,4 @@
-package PetClinic;
+package ru.lessons.lessons.PetClinic;
 
 import java.util.ArrayList;
 import java.util.Collections;

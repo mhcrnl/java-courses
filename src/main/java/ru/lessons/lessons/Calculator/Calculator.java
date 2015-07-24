@@ -1,4 +1,4 @@
-package Calculator;
+package ru.lessons.lessons.Calculator;
 
 /**
  * @author Artva 15/07/2015

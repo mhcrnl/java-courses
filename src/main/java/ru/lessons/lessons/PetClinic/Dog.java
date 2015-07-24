@@ -1,5 +1,4 @@
-package PetClinic;
-
+package ru.lessons.lessons.PetClinic;
 /**
  * @author Artva
  * @since 22/07/2015

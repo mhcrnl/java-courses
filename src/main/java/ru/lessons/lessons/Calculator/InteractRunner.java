@@ -1,4 +1,5 @@
-package Calculator;
+package ru.lessons.lessons.Calculator;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
