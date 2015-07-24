@@ -5,7 +5,7 @@ package PetClinic;
  * @since 22/07/2015
  */
 @SuppressWarnings("ALL")
-abstract class Pet {
+class Pet {
     /**
      * Name of pet.
      */
@@ -38,5 +38,5 @@ abstract class Pet {
         this.name=newName;
     }
 
-    public abstract void makeSound();
+    public void makeSound(){};
 }

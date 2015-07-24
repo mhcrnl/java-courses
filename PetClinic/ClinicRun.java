@@ -9,10 +9,8 @@ import java.io.InputStreamReader;
  * @since 22/07/2015
  */
 class ClinicRun {
-    @SuppressWarnings("CanBeFinal")
     private static final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private static boolean isExit=false;
-    @SuppressWarnings("CanBeFinal")
     private static final String border = "*********************************************************";
     public static void main(String[] args) {
         System.out.println("Hello!");
@@ -22,15 +20,10 @@ class ClinicRun {
             } catch (IOException e) {
                 System.out.println(border);
                 System.out.println("Error! Wrong input! Please try again");
-                System.out.println(border);
-            }
-            finally {
-                System.out.println(border);
-                System.out.println("Have a nice day!");
-                System.out.println(border);
             }
         }
-
+        System.out.println(border);
+        System.out.println("Have a nice day!");
     }
 
     /**
@@ -64,7 +57,6 @@ class ClinicRun {
         System.out.println(border);
         System.out.println("Current clients:");
         Clinic.print();
-        System.out.println(border);
     }
 
     /**
@@ -76,13 +68,12 @@ class ClinicRun {
         System.out.println(border);
         System.out.println("Please enter pet's name");
         Client result = Clinic.SearchByPetName(reader.readLine());
-        if (result.equals(null)){
+        if (result==null){
             System.out.println("There isn't client with such name of pet");
         }
         else{
             System.out.println("Search result:");
             System.out.println(result.toString());
-            System.out.println(border);
             menu2(result);
         }
 
@@ -100,7 +91,6 @@ class ClinicRun {
         System.out.println("rename - edit client's id");
         System.out.println("petrename - edit name of client's pet");
         System.out.println("exit - finish program");
-        System.out.println(border);
         menu2Reader(result);
     }
 
@@ -127,7 +117,7 @@ class ClinicRun {
      * @throws IOException
      */
     private static void petRename(Client client) throws IOException{
-        System.out.println();
+        System.out.println(border);
         System.out.println("Please enter new pet's name");
         client.getPet().setName(reader.readLine());
         System.out.println("Pet's name was successfully changed");
@@ -143,7 +133,6 @@ class ClinicRun {
         System.out.println("Please enter new client id");
         client.setId(reader.readLine());
         System.out.println("Client's id was successfully changed");
-        System.out.println(border);
     }
 
     /**
@@ -161,10 +150,10 @@ class ClinicRun {
      * @throws IOException
      */
     private static void idSearch() throws IOException{
-        System.out.println();
+        System.out.println(border);
         System.out.println("Please enter client's id");
         Client result = Clinic.SearchById(reader.readLine());
-        if (result.equals(null)){
+        if (result==null){
             System.out.println("There isn't client with such id");
         }
         else{
@@ -189,7 +178,6 @@ class ClinicRun {
         String petName = reader.readLine();
         Clinic.add(id,petType,petName);
         System.out.println("Client was successfully added to the list");
-        System.out.println(border);
     }
 
     /**
@@ -204,7 +192,6 @@ class ClinicRun {
         System.out.println("pet - search client by pet");
         System.out.println("list - displays list of clients");
         System.out.println("exit - finish program");
-        System.out.println(border);
         menu1Reader();
     }
 }
