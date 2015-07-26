@@ -5,7 +5,7 @@ package ru.lessons.lessons.PetClinic;
  * @since 22/07/2015
  */
 @SuppressWarnings("ALL")
-class Pet {
+abstract class Pet {
     /**
      * Name of pet.
      */

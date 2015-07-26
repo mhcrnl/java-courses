@@ -1,8 +1,8 @@
 package ru.lessons.lessons.PetClinic;
 
+import com.sun.istack.internal.Nullable;
+
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @author Artva
@@ -21,9 +21,13 @@ class Clinic {
      */
     public static void add(String clientName, String petType, String petName){
         Pet pet = petAdd(petType, petName);
-        assert pet != null;
+        if (pet==null) {
+            System.err.println("***Wrong pet type***");
+            return;
+        }
+        else System.out.println("Client \"" + clientName +"\" was successfully added to the list");
         pet.makeSound();
-        clients.add(new Client(clientName,pet));
+        clients.add(new Client(clientName, pet));
     }
 
     /**
@@ -37,15 +41,17 @@ class Clinic {
             case "Cat": return new Cat(petName);
             case "Fish": return new Fish(petName);
             case "Bird": return new Bird(petName);
+            default:
+                return null;
         }
-        return null;
     }
 
+    @Nullable
     /**
      * @param id Client's id
      * @return Found Client-Object or null, if there isn't client with such id.
      */
-    public static Client SearchById(String id){
+    public static Client searchId(String id){
         for (Client client:clients){
             if (client.getId().equals(id)){
                 return client;
@@ -54,11 +60,12 @@ class Clinic {
         return null;
     }
 
+    @Nullable
     /**
      * @param petName Name of client's pet.
      * @return Found Client-Object or null, if there isn't pet with such name.
      */
-    public static Client SearchByPetName(String petName){
+    public static Client searchPetName(String petName){
         for (Client client:clients){
             if (client.getPetName().equals(petName)){
                 return client;
@@ -75,9 +82,9 @@ class Clinic {
     }
 
     /**
-     * Print current list of clients.
+     * @return Client list as ArrayList<Client>
      */
-    public static void print(){
-        clients.forEach(System.out::println);
+    public static ArrayList<Client> getClients(){
+        return Clinic.clients;
     }
 }
