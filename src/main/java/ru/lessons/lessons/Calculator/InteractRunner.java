@@ -18,8 +18,8 @@ class InteractRunner {
             int firstArg = Integer.parseInt(reader.readLine());
             Calculator calc = new Calculator(firstArg);
             calculation(calc);
-        } catch (IOException e1) {
-            e1.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         finally {
             System.out.println("Good bye!");
