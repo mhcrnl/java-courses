@@ -46,32 +46,42 @@ class Clinic {
         }
     }
 
-    @Nullable
     /**
      * @param id Client's id
-     * @return Found Client-Object or null, if there isn't client with such id.
+     * @return Found Client-Object.
+     * @throws SearchException if list is empty or there isn't client with such name
      */
-    public static Client searchId(String id){
-        for (Client client:clients){
-            if (client.getId().equals(id)){
-                return client;
-            }
+    public static Client searchId(String id) throws SearchException {
+        if (clients.isEmpty()) {
+            throw new SearchException("The list is empty");
         }
-        return null;
+        else{
+            for (Client client:clients){
+                if (client.getId().equals(id)){
+                    return client;
+                }
+            }
+            throw new SearchException("There isn't client with such id");
+        }
     }
 
-    @Nullable
     /**
      * @param petName Name of client's pet.
-     * @return Found Client-Object or null, if there isn't pet with such name.
+     * @return Found Client-Object.
+     * @throws SearchException if list is empty or there isn't client with such pet's name
      */
-    public static Client searchPetName(String petName){
-        for (Client client:clients){
-            if (client.getPetName().equals(petName)){
-                return client;
-            }
+    public static Client searchPetName(String petName) throws SearchException {
+        if (clients.isEmpty()) {
+            throw new SearchException("The list is empty");
         }
-        return null;
+        else{
+            for (Client client:clients){
+                if (client.getPetName().equals(petName)){
+                return client;
+                }
+            }
+            throw new SearchException("There isn't client with such pet's name");
+        }
     }
 
     /**

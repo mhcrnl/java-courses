@@ -1,5 +1,8 @@
 package ru.lessons.lessons.PetClinic;
 
+import sun.plugin2.message.Message;
+import sun.rmi.runtime.Log;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -20,7 +23,10 @@ class ClinicRun {
                 menu1();
             } catch (IOException e) {
                 System.err.println("***Wrong input! Please try again***");
+            } catch (SearchException se) {
+                System.err.println(se);
             }
+
         }
         System.out.println(border);
         System.out.println("Have a nice day!");
@@ -30,7 +36,7 @@ class ClinicRun {
      * Run 1st level menu
      * @throws IOException
      */
-    private static void menu1() throws IOException {
+    private static void menu1() throws IOException, SearchException {
         printMenu1();
         readMenu1();
     }
@@ -52,7 +58,7 @@ class ClinicRun {
      * Reads command, which entered by user on 1st level menu, and defines what to do next.
      * @throws IOException if wrong input type
      */
-    private static void readMenu1() throws IOException {
+    private static void readMenu1() throws IOException, SearchException {
         switch (reader.readLine()) {
             case "add":
                 addClient();
@@ -93,41 +99,29 @@ class ClinicRun {
     /**
      * Searching for the client with id entered by user.
      * Use Client-object result in menu2(), if such id was found in the list or displays to user that there isn't such id in it.
-     * @throws IOException
+     * @throws IOException, SearchException
      */
-    private static void searchId() throws IOException {
+    private static void searchId() throws IOException, SearchException {
         System.out.println(border);
         System.out.println("Please enter client's id");
         Client result = Clinic.searchId(reader.readLine());
-        if (result == null){
-            System.err.println("***There isn't client with such id***");
-        }
-        else {
-            System.out.println("Search result:");
-            System.out.println(result.toString());
-            menu2(result);
-        }
-
+        System.out.println("Search result:");
+        System.out.println(result.toString());
+        menu2(result);
     }
 
     /**
      * Searching for the client with pet, which name entered by user.
      * Use Client-object result in menu2(), if such name was found in the list or displays to user that there isn't such name in it.
-     * @throws IOException
+     * @throws IOException, SearchException
      */
-    private static void searchPetName() throws IOException {
+    private static void searchPetName() throws IOException, SearchException {
         System.out.println(border);
         System.out.println("Please enter pet's name");
         Client result = Clinic.searchPetName(reader.readLine());
-        if (result == null){
-            System.err.println("***There isn't client with such name of pet***");
-        }
-        else {
-            System.out.println("Search result:");
-            System.out.println(result.toString());
-            menu2(result);
-        }
-
+        System.out.println("Search result:");
+        System.out.println(result.toString());
+        menu2(result);
     }
 
     /**

@@ -1,7 +1,9 @@
 package ru.lessons.lessons.Calculator;
 
 /**
- * @author Artva 15/07/2015
+ * @author Artva
+ * @version 1.2
+ * @since 15/07/2015
  */
 class Calculator {
     /**
@@ -10,86 +12,68 @@ class Calculator {
     private int result;
 
     /**
-     * @param firstArg Setting first argument
+     * @param initialValue Setting first value of result
      */
-    public Calculator(int firstArg){
-        this.result=firstArg;
+    public Calculator(int initialValue) {
+        this.result = initialValue;
     }
 
     /**
      * @param args Array of input arguments, which will be added to result
      */
-    private void plus(int... args){
-        for (int arg:args){
-            this.result+=arg;
+    public void plus(int... args) {
+        for (int arg : args) {
+            this.result += arg;
         }
     }
 
     /**
      * @param args Array of arguments, which will be deducted from result
      */
-    private void minus(int... args){
-        for (int arg:args){
-            this.result-=arg;
+    public void minus(int... args) {
+        for (int arg : args) {
+            this.result -= arg;
         }
     }
 
     /**
      * @param args Array of arguments, which will be multiplied to result
      */
-    private void multiple(int... args){
-        for (int arg:args){
-            this.result*=arg;
+    public void multiple(int... args) {
+        for (int arg : args) {
+            this.result *= arg;
         }
     }
 
     /**
      * @param args Array of arguments, which will be divisible by result
      */
-    private void divide(int... args){
-        for (int arg:args){
-            this.result/=arg;
+    public void divide(int... args) {
+        for (int arg : args) {
+            this.result /= arg;
         }
     }
 
     /**
      * @param arg Argument, which will be squared
      */
-    void square(int arg){
-        this.result=arg*arg;
+    void square(int arg) {
+        this.result = arg * arg;
     }
-
-    /**
-     * @param input includes type of arithmetic operation as first character and operation's argument as next character.
-     *              For example, entering "/5" will call divide method with an argument equals .
-     */
-    void calculate(String input){
-        int arg = Integer.parseInt(input.substring(1));
-        char operation = input.charAt(0);
-            switch(operation){
-                case '+': plus(arg);
-                    break;
-                case '-': minus(arg);
-                    break;
-                case '*': multiple(arg);
-                    break;
-                case '/': divide(arg);
-                    break;
-            }
-        }
 
     /**
      * @return current calculation result
      */
-    public int getResult(){
+    public int getResult() {
         return this.result;
     }
 
     /**
      * reset result to 0
      */
-    public void cleanResult(){
-        this.result=0;
+    public void cleanResult() {
+        this.result = 0;
+        System.out.println("***The result has been reset***");
     }
 
 }
