@@ -12,31 +12,40 @@ import java.util.Scanner;
 public class CalculatorRunner {
     private final Scanner reader = new Scanner(System.in);
     private boolean isRunning = true;
+    private final Calculator calc;
+    private String input;
 
-    public static void main(String[] args) {
-        System.out.println("***WELCOME!***");
-        CalculatorRunner cui = new CalculatorRunner();
-        cui.run();
-        System.out.println("***HAVE A NICE DAY***");
+
+    public CalculatorRunner() throws WrongValueException {
+        this.calc = new Calculator(readInitialValue());
     }
 
-    /**
-     * Runs UI and catches user's wrong input exceptions
-     */
-    private void run() {
-        Calculator calc = null;
-        do {
+    public static void main(String[] args) {
+        System.out.println("***WELCOME!***" +
+                "\n Please enter initial value");
+        CalculatorRunner cr = null;
+        while (cr == null) {
             try {
-                calc = new Calculator(initialValueReader());
+                cr = new CalculatorRunner();
+                cr.run();
             } catch (WrongValueException e) {
                 System.err.println("***" + e.getMessage() + "***");
             }
         }
-        while (calc == null);
+        System.out.println("***HAVE A NICE DAY***");
+    }
+
+    /**
+     * Creates Calculator object with initial value, which is read from initialValueReader,
+     * and runs calculation process.     *
+     * Catches user's wrong input exceptions.
+     */
+    private void run() {
+
         printInfo();
         while (this.isRunning) {
             try {
-                runCalculation(calc);
+                runCalculation();
                 System.out.println("***Result is " + calc.getResult() + "***");
             } catch (WrongCommandException | WrongValueException e) {
                 System.err.println("***" + e.getMessage() + "***");
@@ -54,23 +63,22 @@ public class CalculatorRunner {
                 "\n \"square\", \"reset\", \"exit\"");
     }
 
-
     /**
      * Reads user's input and checks it's
      *
      * @return input as Integer if value check was successful
      * @throws WrongValueException if value check failed
      */
-    private int initialValueReader() throws WrongValueException {
-        System.out.println("Please enter the initial value.");
-        String input = reader.next();
+    public int readInitialValue() throws WrongValueException {
+        input = reader.next();
         valueCheck(input);
         return Integer.parseInt(input);
     }
 
     /**
-     * @param input
-     * @throws WrongValueException
+     * Checks that param is a number and don't exceed the limit values of Integer
+     *
+     * @throws WrongValueException if param isn't a number or it's out of Integer's value range
      */
     private void valueCheck(String input) throws WrongValueException {
         for (char ch : input.toCharArray()) {
@@ -82,28 +90,28 @@ public class CalculatorRunner {
         if (value > Integer.MAX_VALUE || value < Integer.MIN_VALUE) throw new WrongValueException();
     }
 
-    private void runCalculation(Calculator calc) throws WrongValueException, WrongCommandException {
-        String input = reader.next();
+    private void runCalculation() throws WrongValueException, WrongCommandException {
+        input = reader.next();
         if (input.length() < 2) {
             throw new WrongCommandException();
-        } else calculationMenu(calc, input);
+        } else calculationMenu();
     }
 
-    private void calculationMenu(Calculator calc, String input) throws WrongValueException, WrongCommandException {
+    private void calculationMenu() throws WrongValueException, WrongCommandException {
         char operation = input.charAt(0);
         String arg = input.substring(1);
         switch (operation) {
             case '+':
                 valueCheck(arg);
-                calc.plus(Integer.parseInt(arg));
+                calc.plus(Integer.parseInt(input));
                 break;
             case '-':
                 valueCheck(arg);
-                calc.minus(Integer.parseInt(arg));
+                calc.minus(Integer.parseInt(input));
                 break;
             case '*':
                 valueCheck(arg);
-                calc.multiple(Integer.parseInt(arg));
+                calc.multiple(Integer.parseInt(input));
                 break;
             case '/':
                 valueCheck(arg);
@@ -112,12 +120,12 @@ public class CalculatorRunner {
                 else calc.divide(parsedArg);
                 break;
             default:
-                commandMenu(calc, input);
+                commandMenu();
                 break;
         }
     }
 
-    private void commandMenu(Calculator calc, String input) throws WrongCommandException {
+    private void commandMenu() throws WrongCommandException {
         switch (input) {
             case "square":
                 calc.square(calc.getResult());
