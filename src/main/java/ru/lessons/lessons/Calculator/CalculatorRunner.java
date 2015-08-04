@@ -16,7 +16,7 @@ public class CalculatorRunner {
     private String input;
 
 
-    public CalculatorRunner() throws WrongValueException {
+    private CalculatorRunner() throws WrongValueException {
         this.calc = new Calculator(readInitialValue());
     }
 
@@ -69,7 +69,7 @@ public class CalculatorRunner {
      * @return input as Integer if value check was successful
      * @throws WrongValueException if value check failed
      */
-    public int readInitialValue() throws WrongValueException {
+    private int readInitialValue() throws WrongValueException {
         input = reader.next();
         valueCheck(input);
         return Integer.parseInt(input);
@@ -81,8 +81,12 @@ public class CalculatorRunner {
      * @throws WrongValueException if param isn't a number or it's out of Integer's value range
      */
     private void valueCheck(String input) throws WrongValueException {
-        for (char ch : input.toCharArray()) {
-            if (!(Character.isDigit(ch))) {
+        char[] chars = input.toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+            if (i == 0 && (chars[0] == '-')) {
+                i++;
+            }
+            if (!(Character.isDigit(chars[i]))) {
                 throw new WrongValueException();
             }
         }
@@ -103,15 +107,15 @@ public class CalculatorRunner {
         switch (operation) {
             case '+':
                 valueCheck(arg);
-                calc.plus(Integer.parseInt(input));
+                calc.plus(Integer.parseInt(arg));
                 break;
             case '-':
                 valueCheck(arg);
-                calc.minus(Integer.parseInt(input));
+                calc.minus(Integer.parseInt(arg));
                 break;
             case '*':
                 valueCheck(arg);
-                calc.multiple(Integer.parseInt(input));
+                calc.multiple(Integer.parseInt(arg));
                 break;
             case '/':
                 valueCheck(arg);
