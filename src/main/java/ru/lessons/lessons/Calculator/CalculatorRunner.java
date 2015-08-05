@@ -1,5 +1,6 @@
 package ru.lessons.lessons.Calculator;
 
+import java.util.LinkedList;
 import java.util.Scanner;
 
 /**
@@ -70,9 +71,8 @@ public class CalculatorRunner {
      * @throws WrongValueException if value check failed
      */
     private int readInitialValue() throws WrongValueException {
-        input = reader.next();
-        valueCheck(input);
-        return Integer.parseInt(input);
+        input = reader.next();        ;
+        return convertToNumber(input);
     }
 
     /**
@@ -80,18 +80,23 @@ public class CalculatorRunner {
      *
      * @throws WrongValueException if param isn't a number or it's out of Integer's value range
      */
-    private void valueCheck(String input) throws WrongValueException {
+    private int convertToNumber(String input) throws WrongValueException {
         char[] chars = input.toCharArray();
-        for (int i = 0; i < chars.length; i++) {
-            if (i == 0 && (chars[0] == '-')) {
-                i++;
-            }
+        int i=0;
+        if (chars[i]=='m'||chars[0] == '-'){
+            i++;
+        }
+        for (; i < chars.length; i++) {
             if (!(Character.isDigit(chars[i]))) {
                 throw new WrongValueException();
             }
         }
+        if (chars[0]=='m'){
+            return getResultMemory(Integer.parseInt(input.substring(1)));
+        }
         long value = Long.parseLong(input);
         if (value > Integer.MAX_VALUE || value < Integer.MIN_VALUE) throw new WrongValueException();
+        return Integer.parseInt(input);
     }
 
     private void runCalculation() throws WrongValueException, WrongCommandException {
@@ -106,20 +111,16 @@ public class CalculatorRunner {
         String arg = input.substring(1);
         switch (operation) {
             case '+':
-                valueCheck(arg);
-                calc.plus(Integer.parseInt(arg));
+                calc.plus(convertToNumber(arg));
                 break;
             case '-':
-                valueCheck(arg);
-                calc.minus(Integer.parseInt(arg));
+                calc.minus(convertToNumber(arg));
                 break;
             case '*':
-                valueCheck(arg);
-                calc.multiple(Integer.parseInt(arg));
+                calc.multiple(convertToNumber(arg));
                 break;
             case '/':
-                valueCheck(arg);
-                int parsedArg = Integer.parseInt(arg);
+                int parsedArg = convertToNumber(arg);
                 if (parsedArg == 0) throw new WrongValueException("You can't divide by zero. Enter non-zero argument.");
                 else calc.divide(parsedArg);
                 break;
@@ -129,6 +130,16 @@ public class CalculatorRunner {
         }
     }
 
+    private int getResultMemory(int index) {
+        return calc.getMemory().get(index);
+    }
+
+    private void addResultMemory() {
+        calc.addMemory(calc.getResult());
+        System.out.println("Result \"" + calc.getResult() + "\" has been saved as \"m" +
+                calc.getMemory().indexOf(calc.getResult()) + "\"");
+    }
+
     private void commandMenu() throws WrongCommandException {
         switch (input) {
             case "square":
@@ -136,6 +147,9 @@ public class CalculatorRunner {
                 break;
             case "reset":
                 calc.cleanResult();
+                break;
+            case "ms":
+                addResultMemory();
                 break;
             case "exit":
                 this.isRunning = false;

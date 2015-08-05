@@ -1,5 +1,7 @@
 package ru.lessons.lessons.Calculator;
 
+import java.util.LinkedList;
+
 /**
  * @author Artva
  * @version 1.2
@@ -10,6 +12,7 @@ class Calculator {
      * current calculation result
      */
     private int result;
+    private LinkedList<Integer> memory = new LinkedList<>();
 
     /**
      * @param initialValue Setting first value of result
@@ -76,4 +79,11 @@ class Calculator {
         System.out.println("***The result has been reset***");
     }
 
+    public void addMemory (int arg){
+        this.memory.add(arg);
+    }
+
+    public LinkedList<Integer> getMemory(){
+        return this.memory;
+    }
 }
