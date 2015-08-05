@@ -18,6 +18,14 @@ public class CalculatorTest {
     }
 
     @Test
+    public void testPlusException() throws Exception {
+        Calculator calculator = new Calculator(0);
+        calculator.plus(5);
+        assertEquals(5, calculator.getResult());
+    }
+
+
+    @Test
     public void testMinus() throws Exception {
         Calculator calculator = new Calculator(0);
         calculator.minus(5);
