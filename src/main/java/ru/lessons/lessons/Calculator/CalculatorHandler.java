@@ -6,47 +6,82 @@ package ru.lessons.lessons.Calculator;
  * @since 05.08.2015 version 1.0
  */
 public class CalculatorHandler {
+    private final Calculator calc;
 
-    public double converter(String input) throws WrongValueException {
+    public CalculatorHandler(String initialValue) throws WrongValueException {
+        this.calc = new Calculator(argConverter(initialValue));
+    }
+
+    public double argConverter(String input) throws WrongValueException {
         char[] chars = input.toCharArray();
         int i = 0;
         if (chars[0] == 'm') {
-            converter(input.substring(1));
-            return getResultMemory(Double.parseDouble(input.substring(1)));
-            if (chars[i] == 'm' || chars[0] == '-') {
-                i++;
+            return getMemoryArg(argConverter(input.substring(1)));
+        }
+        if (chars[0] == '-') {
+            i++;
+        }
+        for (; i < chars.length; i++) {
+            if (!(Character.isDigit(chars[i]))) {
+                throw new WrongValueException();
             }
-            for (; i < chars.length; i++) {
-                if (!(Character.isDigit(chars[i]))) {
-                    throw new WrongValueException();
-                }
-            }
-
         }
         return Double.parseDouble(input);
     }
 
-    private void switchCalculation(Calculator calc) throws WrongValueException, WrongCommandException {
+    private double getMemoryArg(double index) throws WrongValueException {
+        if (calc.getMemory().size() > index) return calc.getMemory().get((int) index);
+        else throw new WrongValueException("There isn't argument witch such index in the memory");
+    }
+
+    public void addMemoryArg() {
+        calc.addMemory(calc.getResult());
+    }
+
+    void switchCalculation(String input) throws WrongValueException, WrongCommandException {
         char operation = input.charAt(0);
         String arg = input.substring(1);
         switch (operation) {
             case '+':
-                calc.plus(convertToNumber(arg));
+                this.calc.plus(argConverter(arg));
                 break;
             case '-':
-                calc.minus(convertToNumber(arg));
+                this.calc.minus(argConverter(arg));
                 break;
             case '*':
-                calc.multiple(convertToNumber(arg));
+                this.calc.multiple(argConverter(arg));
                 break;
             case '/':
-                int parsedArg = convertToNumber(arg);
-                if (parsedArg == 0) throw new WrongValueException("You can't divide by zero. Enter non-zero argument.");
-                else calc.divide(parsedArg);
+                if (argConverter(arg) == 0) throw new WrongValueException("You can't divide by zero. Enter non-zero argument.");
+                else this.calc.divide(argConverter(arg));
                 break;
             default:
-                commandMenu();
+                switchCommand(input);
                 break;
         }
     }
+
+    private void switchCommand(String input) throws WrongCommandException {
+        switch (input) {
+            case "square":
+                calc.square(calc.getResult());
+                break;
+            case "reset":
+                calc.cleanResult();
+                break;
+            case "ms":
+                addMemoryArg();
+                calc.cleanResult();
+                break;
+            case "exit":
+                calc.stop();
+                break;
+            default:
+                throw new WrongCommandException();
+        }
+    }
+    public Calculator getCalculator(){
+        return this.calc;
+    }
+
 }
