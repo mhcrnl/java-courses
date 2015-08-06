@@ -4,23 +4,18 @@ import java.util.LinkedList;
 
 /**
  * @author Artva
- * @version 1.2
- * @since 15/07/2015
+ * @since 05.08.2015 version 1.1
+ * Changelist:
+ * - works with double;
+ * - works with memory;
  */
 class Calculator {
     /**
      * current calculation result
      */
-    private double result;
+    private double result = 0;
     private boolean isRunning = true;
     private LinkedList<Double> memory = new LinkedList<>();
-
-    /**
-     * @param initialValue Setting first value of result
-     */
-    public Calculator(double initialValue) {
-        this.result = initialValue;
-    }
 
     /**
      * @param args Array of input arguments, which will be added to result
@@ -86,6 +81,10 @@ class Calculator {
 
     public LinkedList<Double> getMemory() {
         return this.memory;
+    }
+
+    public void resetMemory() {
+        this.memory = new LinkedList<>();
     }
 
     public boolean isRunning() {
